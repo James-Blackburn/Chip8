@@ -7,14 +7,12 @@ TEST(MemoryTest, HandlesValidLocations) {
     Memory memory;
     
     // Test memory writes
-    EXPECT_NO_THROW(memory.write(0, 128));
-    EXPECT_NO_THROW(memory.write(MEMORY_SIZE/2, 128));
-    EXPECT_NO_THROW(memory.write(MEMORY_SIZE-1, 128));
+    EXPECT_NO_THROW(memory.write(RESERVED_MEMORY, 128));
+    EXPECT_NO_THROW(memory.write(ADDRESSABLE_MEMORY - 1, 128));
 
     // Test memory reads
-    EXPECT_EQ(memory.read(0), 128);
-    EXPECT_EQ(memory.read(MEMORY_SIZE/2), 128);
-    EXPECT_EQ(memory.read(MEMORY_SIZE-1), 128);
+    EXPECT_EQ(memory.read(RESERVED_MEMORY), 128);
+    EXPECT_EQ(memory.read(ADDRESSABLE_MEMORY - 1), 128);
 }
 
 TEST(MemoryTest, HandlesInvalidLocations) { 
@@ -22,11 +20,39 @@ TEST(MemoryTest, HandlesInvalidLocations) {
 
     // Test memory writes
     EXPECT_THROW(memory.write(-1, 128), std::out_of_range);
-    EXPECT_THROW(memory.write(MEMORY_SIZE, 128), std::out_of_range);
+    EXPECT_THROW(memory.write(RESERVED_MEMORY - 1, 128), std::out_of_range);
+    EXPECT_THROW(memory.write(ADDRESSABLE_MEMORY, 128), std::out_of_range);
 
     // Test memory reads
     EXPECT_THROW(memory.read(-1), std::out_of_range);
-    EXPECT_THROW(memory.read(MEMORY_SIZE), std::out_of_range);
+    EXPECT_THROW(memory.read(ADDRESSABLE_MEMORY), std::out_of_range);
+}
+
+TEST(MemoryTest, CheckFontIntegrity) { 
+    Memory memory;
+
+    const unsigned char validFontData[80] = {
+        0xF0, 0x90, 0x90, 0x90, 0xF0,
+        0x20, 0x60, 0x20, 0x20, 0x70,
+        0xF0, 0x10, 0xF0, 0x80, 0xF0,
+        0xF0, 0x10, 0xF0, 0x10, 0xF0,
+        0x90, 0x90, 0xF0, 0x10, 0x10,
+        0xF0, 0x80, 0xF0, 0x10, 0xF0,
+        0xF0, 0x80, 0xF0, 0x90, 0xF0,
+        0xF0, 0x10, 0x20, 0x40, 0x40,
+        0xF0, 0x90, 0xF0, 0x90, 0xF0,
+        0xF0, 0x90, 0xF0, 0x10, 0xF0,
+        0xF0, 0x90, 0xF0, 0x90, 0x90,
+        0xE0, 0x90, 0xE0, 0x90, 0xE0,
+        0xF0, 0x80, 0x80, 0x80, 0xF0,
+        0xE0, 0x90, 0x90, 0x90, 0xE0,
+        0xF0, 0x80, 0xF0, 0x80, 0xF0,
+        0xF0, 0x80, 0xF0, 0x80, 0x80
+    };
+
+    for (int i = FONT_START; i < FONT_END; i++) { 
+        ASSERT_EQ(validFontData[i - FONT_START], memory.read(i));
+    }
 }
 
 TEST(MemoryTest, HandlesLoadingPrograms) { 
@@ -55,6 +81,6 @@ TEST(MemoryTest, HandlesLoadingPrograms) {
 
     // Validate data
     for (int i = 0; i < validTestProgramSize; i++) { 
-        ASSERT_EQ(validTestProgram[i], memory.read(i)) << "Memory integrity check failed";
+        ASSERT_EQ(validTestProgram[i], memory.read(i + RESERVED_MEMORY)) << "Memory integrity check failed";
     }
 }
