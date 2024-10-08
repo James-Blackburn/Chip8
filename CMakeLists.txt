@@ -5,9 +5,12 @@ project(Chip8 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(EXTERNAL_DIR ${PROJECT_SOURCE_DIR}/external)
+set(TEST_DIR ${PROJECT_SOURCE_DIR}/tests)
+
 option(BUILD_TESTS "Build tests" ON)
 
-# Add subdirectories
+add_subdirectory(external)
 add_subdirectory(src)
 
 if (BUILD_TESTS)
@@ -26,10 +29,20 @@ if (BUILD_TESTS)
 
     include(CTest)
     include(GoogleTest)
+    
     add_subdirectory(tests)
 
 endif()
 
 # Build main program
 add_executable(emulator src/main.cpp)
-target_link_libraries(emulator PRIVATE memory)
+target_link_libraries(emulator PRIVATE 
+    memory 
+    display
+    shaderProgram 
+    glfw 
+    glad
+)
+set_target_properties(emulator PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}
+)
