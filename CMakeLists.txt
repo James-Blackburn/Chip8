@@ -35,14 +35,16 @@ if (BUILD_TESTS)
 endif()
 
 # Build main program
-add_executable(emulator src/main.cpp)
-target_link_libraries(emulator PRIVATE 
+add_executable(chip8 src/main.cpp)
+target_link_libraries(chip8 PRIVATE 
     memory 
     display
-    shaderProgram 
-    glfw 
+    shaderProgram
+    cpu
+    emulator
+    glfw
     glad
 )
-set_target_properties(emulator PROPERTIES 
+set_target_properties(chip8 PROPERTIES 
     RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}
 )

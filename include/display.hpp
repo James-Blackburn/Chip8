@@ -9,7 +9,7 @@
 
 class Display {
     private:
-        unsigned char pixels[DISPLAY_WIDTH * DISPLAY_HEIGHT];
+        unsigned char pixels[DISPLAY_WIDTH * DISPLAY_HEIGHT]{0};
         float textureData[DISPLAY_WIDTH * DISPLAY_HEIGHT * 3]{0.0f};
         int fbWidth, fbHeight;
         bool initialised = false;

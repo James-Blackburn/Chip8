@@ -14,3 +14,17 @@ target_include_directories(shaderProgram PUBLIC
     ${PROJECT_SOURCE_DIR}/include/
     ${EXTERNAL_DIR}/glad/include/
 )
+
+add_library(cpu STATIC cpu.cpp)
+target_include_directories(cpu PUBLIC 
+    ${PROJECT_SOURCE_DIR}/include/
+    ${EXTERNAL_DIR}/glad/include/
+    ${EXTERNAL_DIR}/glfw/include/
+)
+
+add_library(emulator STATIC emulator.cpp)
+target_include_directories(emulator PUBLIC 
+    ${PROJECT_SOURCE_DIR}/include/
+    ${EXTERNAL_DIR}/glad/include/
+    ${EXTERNAL_DIR}/glfw/include/
+)

@@ -1,4 +1,4 @@
 .vscode/
 build/
-emulator.exe
-emulator.pdb
+chip8.exe
+chip8.pdb

@@ -6,5 +6,6 @@ in vec2 TexCoords;
 out vec4 FragColour;
 
 void main() { 
-    FragColour = texture(quadTexture, TexCoords);
+    vec2 flippedTexCoords = vec2(TexCoords.x, 1.0 - TexCoords.y);
+    FragColour = texture(quadTexture, flippedTexCoords);
 }

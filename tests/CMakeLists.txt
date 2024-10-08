@@ -14,6 +14,20 @@ target_link_libraries(test_display PRIVATE
 )
 gtest_discover_tests(test_display)
 
+# Add cpu test suite
+add_executable(test_cpu test_cpu.cpp)
+target_link_libraries(test_cpu PRIVATE 
+    GTest::gtest_main 
+    cpu
+    memory
+    display
+    shaderProgram
+    emulator
+    glfw
+    glad
+)
+gtest_discover_tests(test_cpu)
+
 # Copy resource files to test build directory
 add_custom_command(TARGET test_memory POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
