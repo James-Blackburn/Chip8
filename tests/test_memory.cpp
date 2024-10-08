@@ -77,7 +77,7 @@ TEST(MemoryTest, HandlesLoadingPrograms) {
     
     // Test loading program
     std::cout << std::filesystem::current_path() << std::endl;
-    ASSERT_NO_THROW(memory.loadProgram("./test_data/ibm.ch8")) << "Failed to load program into memory";
+    ASSERT_NO_THROW(memory.loadProgram("./res/rom/ibm.ch8")) << "Failed to load program into memory";
 
     // Validate data
     for (int i = 0; i < validTestProgramSize; i++) { 
