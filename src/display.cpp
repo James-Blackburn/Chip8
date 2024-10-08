@@ -97,9 +97,9 @@ void Display::setPixel(int px, int py, unsigned char value) {
     if (px >= 0 && px < DISPLAY_WIDTH && py >= 0 && py < DISPLAY_HEIGHT) { 
         const int pixelIndex = py * DISPLAY_WIDTH + px;
         pixels[pixelIndex] = value;
-        textureData[pixelIndex * 3] = (float)pixels[pixelIndex] / 255.0f;
-        textureData[pixelIndex * 3 + 1] = (float)pixels[pixelIndex] / 255.0f;
-        textureData[pixelIndex * 3 + 2] = (float)pixels[pixelIndex] / 255.0f;
+        textureData[pixelIndex * 3] = pixels[pixelIndex] * 255.0f;
+        textureData[pixelIndex * 3 + 1] = pixels[pixelIndex] * 255.0f;
+        textureData[pixelIndex * 3 + 2] = pixels[pixelIndex] * 255.0f;
         pendingTextureUpdate = true;
     } else { 
         throw std::out_of_range("Display location invalid: " + 
