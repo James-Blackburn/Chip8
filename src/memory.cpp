@@ -7,7 +7,7 @@
 void Memory::loadProgram(const std::string& programLocation) { 
     // Check size of file
     uintmax_t fileSize = std::filesystem::file_size(programLocation);
-    if (!fileSize > PROGRAM_MEMORY) { 
+    if (fileSize > PROGRAM_MEMORY) { 
         throw std::runtime_error("Too large to load. Failed to read ROM: " + programLocation);
     }
 
