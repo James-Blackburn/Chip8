@@ -11,6 +11,8 @@ class Emulator {
         Memory memory;
         Display display;
 
+        Emulator();
+
         void init();
         void run();
 };
