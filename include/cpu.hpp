@@ -12,13 +12,13 @@ class Cpu {
         int pc = 0x200;
 
         // Registers
-        unsigned short opcode;
-        unsigned short I;
-        unsigned char V[16];
-        unsigned short stack[16];
+        unsigned short opcode = 0;
+        unsigned short I = 0;
+        unsigned char V[16]{0};
+        unsigned short stack[16]{0};
         unsigned char sp = 0;
-        unsigned char delayTimer;
-        unsigned char soundTimer;
+        unsigned char delayTimer = 0;
+        unsigned char soundTimer = 0;
 
         std::string opcodeErrorMsg();
 
@@ -60,6 +60,7 @@ class Cpu {
     public:
         void fetchOpcode();
         void executeOpcode();
+        void countdownTimers(int amount);
 
         inline void setDevice(Emulator* emulator);
         inline void setProgramCounter(int value);

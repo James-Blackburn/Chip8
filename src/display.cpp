@@ -37,7 +37,7 @@ void Display::createWindow() {
 
     glfwMakeContextCurrent(window);
     glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     // load OpenGL function pointers with glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {

@@ -11,6 +11,19 @@ std::string Cpu::opcodeErrorMsg() {
     return ss.str();
 }
 
+void Cpu::countdownTimers(int amount) {
+    if (delayTimer > 0) {
+        delayTimer -= amount;
+    } else {
+        // No action needed
+    }
+    if (soundTimer > 0) {
+        soundTimer -= amount;
+    } else {
+        // Play sound
+    }
+}
+
 void Cpu::fetchOpcode() { 
     // Construct opcode
     opcode = static_cast<unsigned short>(device->memory.read(pc)) << 8 | device->memory.read(pc + 1);
@@ -132,6 +145,7 @@ void Cpu::executeOpcode() {
                     throw std::runtime_error(opcodeErrorMsg());
                 }
             }
+            break;
         } case 0xA000: {
             // set I to NNN
             I = opcode & 0x0FFF;
@@ -182,8 +196,10 @@ void Cpu::executeOpcode() {
         } case 0xE000: { // <----------- Implement
             switch(opcode & 0x00FF) {
                 case 0x009E: {
+                    throw std::runtime_error(opcodeErrorMsg());
                     break;
                 } case 0x00A1: {
+                    throw std::runtime_error(opcodeErrorMsg());
                     break;
                 } default: {
                     throw std::runtime_error(opcodeErrorMsg());
@@ -198,6 +214,7 @@ void Cpu::executeOpcode() {
                     break;
                 } case 0x000A: { // <------------- Implement
                     // Set VX to key press (await)
+                    throw std::runtime_error(opcodeErrorMsg());
                     break;
                 } case 0x0015: {
                     // Set delay to VX
@@ -248,5 +265,5 @@ void Cpu::executeOpcode() {
         }
     }
 
-    std::cout << pc << "| executed opcode: " << std::hex << opcode << "\n";
+    //std::cout << pc << "| executed opcode: " << std::hex << opcode << "\n";
 }
