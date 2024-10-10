@@ -33,4 +33,5 @@ class Memory {
         void loadProgram(const std::string& programLocation);
         unsigned char read(int location);
         void write(int location, unsigned char data);
+        void reset();
 };

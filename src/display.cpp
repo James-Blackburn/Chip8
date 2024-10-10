@@ -25,6 +25,18 @@ void Display::init() {
     initialised = true;
 }
 
+void Display::destroy() {
+    if (initialised) { 
+        // Clean resources
+        initialised = 0;
+        glDeleteVertexArrays(1, &quadVaoId);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+    } else {
+        // No action needed
+    }
+}
+
 void Display::createWindow() { 
     // create window with glfw
     window = glfwCreateWindow(1280, 640, "Chip8 Emulator", NULL, NULL);
@@ -167,12 +179,5 @@ void Display::renderPixels() {
 }
 
 Display::~Display() { 
-    if (initialised) { 
-        // Clean resources
-        glDeleteVertexArrays(1, &quadVaoId);
-        glfwDestroyWindow(window);
-        glfwTerminate();
-    } else {
-        // No action needed
-    }
+    destroy();
 }

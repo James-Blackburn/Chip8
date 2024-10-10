@@ -30,6 +30,7 @@ class Display {
         ~Display();
 
         void init();
+        void destroy();
         void update();
         void setPixel(int px, int py, unsigned char value);
         unsigned char readPixel(int px, int py);

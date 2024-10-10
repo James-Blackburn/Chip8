@@ -8,13 +8,19 @@
 Emulator::Emulator() {
     cpu.setDevice(this);
     keyboard.setDevice(this);
-    std::srand(static_cast<unsigned int>(std::time(0)));
 }
 
-void Emulator::init() { 
-    display.init();
-    memory.loadProgram("res/rom/games/Breakout (Brix hack) [David Winter, 1997].ch8");
+void Emulator::load(std::string romPath) { 
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    memory.loadProgram(romPath);
     cpu.setProgramCounter(0x200);
+    display.init();
+}
+
+void Emulator::reset() {
+    cpu.reset();
+    memory.reset();
+    display.clear();
 }
 
 void Emulator::run() { 
@@ -42,4 +48,6 @@ void Emulator::run() {
         std::chrono::nanoseconds waitDuration = TARGET_CYCLE_DURATION - (cycleEndTime - cycleStartTime);
         while (std::chrono::high_resolution_clock::now() < cycleEndTime + waitDuration){}
     }
+
+    display.destroy();
 }

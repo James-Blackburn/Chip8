@@ -45,3 +45,10 @@ void Memory::write(int location, unsigned char data) {
         throw std::out_of_range("Memory location invalid: " + std::to_string(location));
     }
 }
+
+void Memory::reset() {
+    // Clear program memory
+    for (int i = RESERVED_MEMORY; i < ADDRESSABLE_MEMORY; i++) {
+        memory[i] = 0;
+    }
+}

@@ -24,6 +24,19 @@ void Cpu::countdownTimers(int amount) {
     }
 }
 
+void Cpu::reset() {
+    opcode = 0;
+    I = 0;
+    sp = 0;
+    delayTimer = 0;
+    soundTimer = 0;
+    
+    for (int i = 0; i < 16; i++) {
+        V[i] = 0;
+        stack[i] = 0;
+    }
+}
+
 void Cpu::fetchOpcode() { 
     // Construct opcode
     opcode = static_cast<unsigned short>(device->memory.read(pc)) << 8 | device->memory.read(pc + 1);
