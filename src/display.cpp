@@ -27,7 +27,7 @@ void Display::init() {
 
 void Display::createWindow() { 
     // create window with glfw
-    window = glfwCreateWindow(640, 320, "Chip8 Emulator", NULL, NULL);
+    window = glfwCreateWindow(1280, 640, "Chip8 Emulator", NULL, NULL);
     if (!window) {
         glfwTerminate();
         throw std::runtime_error("Failed to create glfw window.");
@@ -119,12 +119,14 @@ unsigned char Display::readPixel(int px, int py) {
 void Display::clear() { 
     for (int i = 0; i < DISPLAY_WIDTH * DISPLAY_HEIGHT; i++) { 
         pixels[i] = 0;
+        textureData[i * 3] = 0.0f;
+        textureData[i * 3 + 1] = 0.0f;
+        textureData[i * 3 + 2] = 0.0f;
+        pendingTextureUpdate = true;
     }
 }
 
 void Display::update() { 
-    glfwPollEvents();
-
     // Resize viewport
     glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
     glViewport(0, 0, fbWidth, fbHeight);
