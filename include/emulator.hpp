@@ -3,6 +3,7 @@
 #include "cpu.hpp"
 #include "memory.hpp"
 #include "display.hpp"
+#include "keyboard.hpp"
 
 #include <chrono>
 
@@ -16,6 +17,7 @@ class Emulator {
         Cpu cpu;
         Memory memory;
         Display display;
+        Keyboard keyboard;
 
         Emulator();
 

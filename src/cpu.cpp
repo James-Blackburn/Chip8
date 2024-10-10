@@ -76,11 +76,11 @@ void Cpu::executeOpcode() {
             break;
         } case 0x6000: {
             // Set VX to NN
-            V[(opcode & 0x0F00) >> 8] = opcode & 0x00FF;
+            V[(opcode & 0x0F00) >> 8] = (opcode & 0x00FF);
             break;
         } case 0x7000: {
             // Add NN to VX
-            V[(opcode & 0xF00) >> 8] += opcode & 0x00FF;
+            V[(opcode & 0xF00) >> 8] += (opcode & 0x00FF);
             break;
         } case 0x8000: {
             switch (opcode & 0x000F) {
@@ -128,13 +128,15 @@ void Cpu::executeOpcode() {
                     V[(opcode & 0x0F00) >> 8] >>= 1;
                     break;
                 } case 0x0007: {
-                    // Set VX = VY - VX
-                    if (V[(opcode & 0x0F00) >> 8] > V[(opcode & 0x00F0) >> 4]) {
-                        V[0xF] = 0;
-                    } else {
-                        V[0xF] = 1;
-                    }
+                    // Subtract VX = VY - VX
+                    unsigned char VX = V[(opcode & 0x0F00) >> 8];
                     V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8];
+                    // Set carry flag
+                    if (V[(opcode & 0x00F0) >> 4] >= VX) { 
+                        V[0xF] = 1;
+                    } else {
+                        V[0xF] = 0;
+                    }
                     break;
                 } case 0x000E: {
                     // Set VX to VX << 1
@@ -193,13 +195,19 @@ void Cpu::executeOpcode() {
                 }
             }
             break;
-        } case 0xE000: { // <----------- Implement
+        } case 0xE000: {
             switch(opcode & 0x00FF) {
                 case 0x009E: {
-                    throw std::runtime_error(opcodeErrorMsg());
+                    // Skip next if VX pressed
+                    if (device->keyboard.getKeyPressed(V[(opcode & 0x0F00) >> 8])) {
+                        pc += 2;
+                    }
                     break;
                 } case 0x00A1: {
-                    throw std::runtime_error(opcodeErrorMsg());
+                    // Skip next if VX not pressed
+                    if (!device->keyboard.getKeyPressed(V[(opcode & 0x0F00) >> 8])) {
+                        pc += 2;
+                    }
                     break;
                 } default: {
                     throw std::runtime_error(opcodeErrorMsg());
@@ -212,9 +220,16 @@ void Cpu::executeOpcode() {
                     // Set VX to delay
                     V[(opcode & 0x0F00) >> 8] = delayTimer;
                     break;
-                } case 0x000A: { // <------------- Implement
-                    // Set VX to key press (await)
-                    throw std::runtime_error(opcodeErrorMsg());
+                } case 0x000A: {
+                    // Await and set VX to keypress
+                    pc -= 2;
+                    for (unsigned char key = 0; key <= 0xF; key++) {
+                        if (device->keyboard.getKeyPressed(key)) {
+                            V[(opcode & 0x0F00) >> 8] = key;
+                            pc += 2;
+                            break;
+                        }
+                    }
                     break;
                 } case 0x0015: {
                     // Set delay to VX
@@ -264,6 +279,4 @@ void Cpu::executeOpcode() {
             throw std::runtime_error(opcodeErrorMsg());
         }
     }
-
-    //std::cout << pc << "| executed opcode: " << std::hex << opcode << "\n";
 }

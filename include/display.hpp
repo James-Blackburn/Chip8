@@ -24,6 +24,8 @@ class Display {
         void loadShaders();
         void createRenderData();
         void renderPixels();
+
+        friend class Keyboard;
     public:
         ~Display();
 
@@ -34,8 +36,13 @@ class Display {
         void clear();
         
         inline bool isShowing() const;
+        inline void pollEvents() const;
 };
 
 bool Display::isShowing() const { 
     return !glfwWindowShouldClose(window);
+}
+
+void Display::pollEvents() const {
+    glfwPollEvents();
 }

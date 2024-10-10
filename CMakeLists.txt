@@ -42,6 +42,7 @@ target_link_libraries(chip8 PRIVATE
     shaderProgram
     cpu
     emulator
+    keyboard
     glfw
     glad
 )

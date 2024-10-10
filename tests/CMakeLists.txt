@@ -23,6 +23,7 @@ target_link_libraries(test_cpu PRIVATE
     display
     shaderProgram
     emulator
+    keyboard
     glfw
     glad
 )

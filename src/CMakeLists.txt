@@ -28,3 +28,10 @@ target_include_directories(emulator PUBLIC
     ${EXTERNAL_DIR}/glad/include/
     ${EXTERNAL_DIR}/glfw/include/
 )
+
+add_library(keyboard STATIC keyboard.cpp)
+target_include_directories(keyboard PUBLIC
+    ${PROJECT_SOURCE_DIR}/include/
+    ${EXTERNAL_DIR}/glfw/include/
+    ${EXTERNAL_DIR}/glad/include/
+)
