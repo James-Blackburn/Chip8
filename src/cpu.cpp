@@ -148,6 +148,11 @@ void Cpu::executeOpcode() {
                 }
             }
             break;
+        } case 0x9000: {
+            if (V[(opcode & 0x0F00) >> 8] != V[(opcode & 0X00F0) >> 4]) {
+                pc += 2;
+            }
+            break;
         } case 0xA000: {
             // set I to NNN
             I = opcode & 0x0FFF;

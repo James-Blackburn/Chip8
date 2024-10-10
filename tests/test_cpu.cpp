@@ -234,6 +234,26 @@ TEST(TestCpu, Opcode_0x8XYE) {
     EXPECT_EQ(emulator.cpu.V[0xF], 1) << "Incorrect MSB stored";
 }
 
+// Test opcode 0x9XY0, skip next if VX != VY
+TEST(TestCpu, Opcode_0x9XY0) {
+    Emulator emulator;
+    emulator.cpu.opcode = 0x9010;
+
+    // Check no skip when equal
+    emulator.cpu.pc = 0x0200;
+    emulator.cpu.V[0x0] = 0;
+    emulator.cpu.V[0x1] = 0;
+    ASSERT_NO_THROW(emulator.cpu.executeOpcode());
+    ASSERT_EQ(emulator.cpu.pc, 0x0200) << "Incorrect, PC skipped instruction";
+
+    // Check skip when unequal
+    emulator.cpu.pc = 0x0200;
+    emulator.cpu.V[0x0] = 0;
+    emulator.cpu.V[0x1] = 1;
+    ASSERT_NO_THROW(emulator.cpu.executeOpcode());
+    ASSERT_EQ(emulator.cpu.pc, 0x0202) << "Incorrect, PC did not skip instruction";
+}
+
 // Test opcode 0xANNN, set I to NNN
 TEST(TestCpu, Opcode_0xANNN) { 
     Emulator emulator;

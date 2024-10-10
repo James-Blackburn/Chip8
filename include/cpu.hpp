@@ -41,6 +41,7 @@ class Cpu {
         friend class TestCpu_Opcode_0x8XY6_Test;
         friend class TestCpu_Opcode_0x8XY7_Test;
         friend class TestCpu_Opcode_0x8XYE_Test;
+        friend class TestCpu_Opcode_0x9XY0_Test;
         friend class TestCpu_Opcode_0xANNN_Test;
         friend class TestCpu_Opcode_0xBNNN_Test;
         friend class TestCpu_Opcode_0xCXNN_Test;
