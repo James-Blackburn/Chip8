@@ -61,7 +61,7 @@ class Cpu {
     public:
         void fetchOpcode();
         void executeOpcode();
-        void countdownTimers(int amount);
+        void countdownTimers();
         void reset();
 
         inline void setDevice(Emulator* emulator);

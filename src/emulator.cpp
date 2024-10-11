@@ -15,12 +15,14 @@ void Emulator::load(std::string romPath) {
     memory.loadProgram(romPath);
     cpu.setProgramCounter(0x200);
     display.init();
+    speaker.init();
 }
 
 void Emulator::reset() {
     cpu.reset();
     memory.reset();
     display.clear();
+    speaker.stopBeep();
 }
 
 void Emulator::run() { 
@@ -37,7 +39,7 @@ void Emulator::run() {
 
         // Update display and countdown timers every 60hz
         if (cycleCounter % CYCLES_PER_DISPLAY_UPDATE == 0) {
-            cpu.countdownTimers(1);
+            cpu.countdownTimers();
             display.update();
             cycleCounter = 0;
         }

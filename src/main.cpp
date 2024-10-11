@@ -4,6 +4,10 @@
 #include <map>
 
 #include "emulator.hpp"
+#include "speaker.hpp"
+
+#include <thread>
+#include <chrono>
 
 void terminateHandler() {
     try {
@@ -74,7 +78,7 @@ int main() {
     std::set_terminate(terminateHandler);
 
     std::cout << "Chip8 Emulator\n" << std::endl;
-    
+
     Emulator chip8;
     while (1) {
         chip8.load(selectRom());

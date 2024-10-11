@@ -43,8 +43,10 @@ target_link_libraries(chip8 PRIVATE
     cpu
     emulator
     keyboard
+    speaker
     glfw
     glad
+    OpenAL::OpenAL
 )
 set_target_properties(chip8 PROPERTIES 
     RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}

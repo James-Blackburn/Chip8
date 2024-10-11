@@ -24,6 +24,7 @@ target_link_libraries(test_cpu PRIVATE
     shaderProgram
     emulator
     keyboard
+    speaker
     glfw
     glad
 )

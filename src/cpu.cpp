@@ -11,16 +11,18 @@ std::string Cpu::opcodeErrorMsg() {
     return ss.str();
 }
 
-void Cpu::countdownTimers(int amount) {
+void Cpu::countdownTimers() {
     if (delayTimer > 0) {
-        delayTimer -= amount;
+        delayTimer--;
     } else {
         // No action needed
     }
     if (soundTimer > 0) {
-        soundTimer -= amount;
+        device->speaker.playBeep();
+        soundTimer--;
     } else {
-        // Play sound
+        // Stop sound
+        device->speaker.stopBeep();
     }
 }
 

@@ -4,6 +4,7 @@
 #include "memory.hpp"
 #include "display.hpp"
 #include "keyboard.hpp"
+#include "speaker.hpp"
 
 #include <chrono>
 #include <string>
@@ -21,6 +22,7 @@ class Emulator {
         Memory memory;
         Display display;
         Keyboard keyboard;
+        Speaker speaker;
 
         Emulator();
 
