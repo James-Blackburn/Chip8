@@ -3,11 +3,13 @@
 #define DISPLAY_WIDTH 64
 #define DISPLAY_HEIGHT 32
 
+#include <atomic>
+
 class Display {
     private:
         unsigned char pixels[DISPLAY_WIDTH * DISPLAY_HEIGHT]{0};
         float textureData[DISPLAY_WIDTH * DISPLAY_HEIGHT * 3]{0.0f};
-        bool textureUpdated = false;
+        std::atomic<bool> textureUpdated = false;
 
         friend class Keyboard;
     public:

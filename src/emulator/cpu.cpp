@@ -202,7 +202,6 @@ void Cpu::executeOpcode() {
             // Execute instruction, drawing sprite
             V[0xF] = 0;
             for (unsigned char y = 0; y < height; y++) {
-                //unsigned char spriteData = device->memory.read(I + (height - 1 - y));
                 unsigned char spriteData = device->memory.read(I + y);
                 for (unsigned char x = 0; x < width; x++) {
                     unsigned char oldPixelValue = device->display.readPixel(x + spriteX, y + spriteY);

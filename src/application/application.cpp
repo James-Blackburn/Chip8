@@ -93,9 +93,9 @@ void Application::createRenderData() {
     glBindVertexArray(GL_NONE);
 
     // Generate and bind the texture
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glGenTextures(1, &textureId);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textureId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, DISPLAY_WIDTH, DISPLAY_HEIGHT, 0, 
         GL_RGB, GL_FLOAT, emulator.display.getTextureData());
 
@@ -156,14 +156,15 @@ void Application::updateEmulatorKeyboard() {
     emulator.keyboard.setKeyPressed(0xF, glfwGetKey(window, GLFW_KEY_V));
 }
 
+#include <iostream>
+
 void Application::renderEmulator() {
     glUseProgram(quadShader.getId());
     glBindVertexArray(quadVaoId);
-
-    glUniform1i(0, 0);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
+    glUniform1i(glGetUniformLocation(quadShader.getId(), "quadTexture"), 0);
     
     // Check if texture needs updating
     if (emulator.display.getTextureUpdated()) { 
@@ -177,6 +178,7 @@ void Application::renderEmulator() {
     
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
+    glBindTexture(GL_TEXTURE_2D, GL_NONE);
     glBindVertexArray(GL_NONE);
     glUseProgram(GL_NONE);
 }
