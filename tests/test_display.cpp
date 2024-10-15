@@ -2,11 +2,6 @@
 
 #include "display.hpp"
 
-TEST(DisplayTest, DisplayInitialisation) {
-    Display display;
-    ASSERT_NO_THROW(display.init()) << "Failed to initialise display.";
-}
-
 TEST(DisplayTest, ManipulatingPixels) { 
     Display display;
     

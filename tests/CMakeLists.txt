@@ -5,13 +5,7 @@ gtest_discover_tests(test_memory)
 
 # Add display test suite
 add_executable(test_display test_display.cpp)
-target_link_libraries(test_display PRIVATE 
-    GTest::gtest_main 
-    display
-    shaderProgram 
-    glfw
-    glad
-)
+target_link_libraries(test_display PRIVATE GTest::gtest_main display)
 gtest_discover_tests(test_display)
 
 # Add cpu test suite
@@ -21,12 +15,9 @@ target_link_libraries(test_cpu PRIVATE
     cpu
     memory
     display
-    shaderProgram
     emulator
     keyboard
     speaker
-    glfw
-    glad
 )
 gtest_discover_tests(test_cpu)
 

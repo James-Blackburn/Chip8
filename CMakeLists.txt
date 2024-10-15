@@ -37,6 +37,7 @@ endif()
 # Build main program
 add_executable(chip8 src/main.cpp)
 target_link_libraries(chip8 PRIVATE 
+    application
     memory 
     display
     shaderProgram
@@ -47,6 +48,7 @@ target_link_libraries(chip8 PRIVATE
     glfw
     glad
     OpenAL::OpenAL
+    imgui
 )
 set_target_properties(chip8 PROPERTIES 
     RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}
