@@ -30,7 +30,7 @@ class Application {
     GLuint textureId;
     
     std::thread emulatorThread;
-    std::string currentRomPath = "";
+    std::string currentRomPath;
 
     void loadShaders();
     void createRenderData();

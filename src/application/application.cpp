@@ -1,5 +1,30 @@
 #include "application.hpp"
 
+const char* quadVertexShader =
+"#version 460 core                               \n"
+"                                                \n"
+"layout (location = 0) in vec2 position;         \n"
+"                                                \n"
+"out vec2 TexCoords;                             \n"
+"                                                \n"
+"void main() {                                   \n"
+"    TexCoords = (position + 1.0) / 2.0;         \n"
+"    gl_Position = vec4(position, 0.0, 1.0);     \n"
+"}                                               ";
+
+const char* quadFragShader =
+"#version 460 core                                                  \n"
+"                                                                   \n"
+"uniform sampler2D quadTexture;                                     \n"
+"                                                                   \n"
+"in vec2 TexCoords;                                                 \n"
+"out vec4 FragColour;                                               \n"
+"                                                                   \n"
+"void main() {                                                      \n"
+"    vec2 flippedTexCoords = vec2(TexCoords.x, 1.0 - TexCoords.y);  \n"
+"    FragColour = texture(quadTexture, flippedTexCoords);           \n"
+"}                                                                  ";
+
 Application::Application() { 
     // Initialize glfw
     if (!glfwInit()) {
@@ -63,8 +88,8 @@ Application::~Application() {
 void Application::loadShaders() { 
     // Load shader
     quadShader.create({
-        {"./res/shaders/quad.vert", GL_VERTEX_SHADER},
-        {"./res/shaders/quad.frag", GL_FRAGMENT_SHADER}
+        {quadVertexShader, GL_VERTEX_SHADER},
+        {quadFragShader, GL_FRAGMENT_SHADER}
     });
 }
 

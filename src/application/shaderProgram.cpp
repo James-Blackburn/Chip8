@@ -7,27 +7,12 @@
 #include <stdexcept>
 
 void ShaderProgram::create(std::vector<Shader> shaders){
-    // load and compile shaders
+    // Compile shaders
     for (Shader& shader : shaders){
-        // Open shader file
-        std::ifstream file(shader.source);
-        if (!file.is_open()) { 
-            throw std::runtime_error("Failed to open shader: " + shader.source);
-        } else {
-            // No action needed
-        }
-
-        // Read shader into memory
-        std::string line, text;
-        while (std::getline(file, line)){
-            text += line + "\n";
-        }
-        const char* data = text.c_str();
-        file.close();
-
         // compile shader
         shader.glId = glCreateShader(shader.type);
-        glShaderSource(shader.glId, 1, &data, NULL);
+        const char* source = shader.source.c_str();
+        glShaderSource(shader.glId, 1, &source, NULL);
         glCompileShader(shader.glId);
 
         // check for opengl errors after compiling shader
@@ -37,7 +22,7 @@ void ShaderProgram::create(std::vector<Shader> shaders){
         
         if(!status){
             glGetShaderInfoLog(shader.glId, 512, NULL, error);
-            throw std::runtime_error("Failed to compile shader: " + shader.source + "\n" + error);
+            throw std::runtime_error("Failed to compile shader: \n" + shader.source + "\n" + error);
         } else {
             // No action needed
         }
