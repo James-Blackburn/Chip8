@@ -156,8 +156,6 @@ void Application::updateEmulatorKeyboard() {
     emulator.keyboard.setKeyPressed(0xF, glfwGetKey(window, GLFW_KEY_V));
 }
 
-#include <iostream>
-
 void Application::renderEmulator() {
     glUseProgram(quadShader.getId());
     glBindVertexArray(quadVaoId);
