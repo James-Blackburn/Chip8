@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\james\source\repos\Chip8\external\openal-soft\version.h.in">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\james\source\repos\Chip8\CMakeFiles\01a8f9bbfce365ce69aa4864b89e3274\alsoft.build_version.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\james\source\repos\Chip8\external\openal-soft\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\james\source\repos\Chip8\external\openal-soft\CMakeFiles\alsoft.build_version" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1750A41D-77BE-3DED-880D-4225A3455CE9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{96DF54EC-72F9-3381-A727-631B4DCF2ADF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
